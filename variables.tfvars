@@ -1,0 +1,19 @@
+cluster_name              = "pegasus"
+aws_region                = "us-east-2"
+az1                       = "us-east-2a"
+az2                       = "us-east-2b"
+k8s_version               = "1.31"
+endpoint_private_access   = true
+endpoint_public_access    = true
+enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+vpc_cidr                  = "10.0.0.0/16"
+public_subnet_az1_cidr    = "10.0.16.0/20"
+public_subnet_az2_cidr    = "10.0.32.0/20"
+private_subnet_az1_cidr   = "10.0.48.0/20"
+private_subnet_az2_cidr   = "10.0.64.0/20"
+tags = {
+  Project   = "DevOps"
+  Terraform = "true"
+  Owner     = "DevOps Team"
+  Env       = "staging"
+}
