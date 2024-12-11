@@ -38,6 +38,18 @@ variable "enabled_cluster_log_types" {
   description = "Control Plane Logging."
 }
 
+variable "istio_ingress_enabled" {
+  description = "Defines whether Istio ingress will be enabled."
+  type        = bool
+  default     = false
+}
+
+variable "istio_nlb_ingress_internal" {
+  description = "Defines whether the NLB for the Istio ingress will be internal."
+  type        = bool
+  default     = false
+}
+
 variable "vpc_cidr" {
   type        = string
   description = "The CIDR block for the VPC."
