@@ -8,6 +8,7 @@ endpoint_public_access     = true
 enabled_cluster_log_types  = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 istio_ingress_enabled      = true
 istio_nlb_ingress_internal = false
+certificate_arn            = "CERTIFICATE_ARN"
 vpc_cidr                   = "10.0.0.0/16"
 public_subnet_az1_cidr     = "10.0.16.0/20"
 public_subnet_az2_cidr     = "10.0.32.0/20"

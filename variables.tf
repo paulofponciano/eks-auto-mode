@@ -50,6 +50,12 @@ variable "istio_nlb_ingress_internal" {
   default     = false
 }
 
+variable "certificate_arn" {
+  description = "ACM Certificate."
+  type        = string
+  default     = false
+}
+
 variable "vpc_cidr" {
   type        = string
   description = "The CIDR block for the VPC."

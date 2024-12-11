@@ -42,7 +42,7 @@ resource "aws_lb_listener" "ingress_443" {
   load_balancer_arn = aws_lb.istio_ingress[0].arn
   port              = "443"
   protocol          = "TLS"
-  certificate_arn   = "CERTIFICATE_ARN"
+  certificate_arn   = var.certificate_arn
   alpn_policy       = "HTTP2Preferred"
 
   default_action {
