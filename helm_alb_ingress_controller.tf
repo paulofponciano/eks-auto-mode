@@ -1,4 +1,5 @@
 resource "time_sleep" "wait_40_seconds_albcontroller" {
+  count      = var.istio_ingress_enabled ? 1 : 0
   depends_on = [helm_release.alb_ingress_controller]
 
   create_duration = "40s"
