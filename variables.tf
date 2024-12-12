@@ -44,10 +44,10 @@ variable "istio_ingress_enabled" {
   default     = false
 }
 
-variable "istio_nlb_ingress_internal" {
-  description = "Defines whether the NLB for the Istio ingress will be internal."
-  type        = bool
-  default     = false
+variable "istio_nlb_ingress_scheme" {
+  description = "Defines whether the NLB for the Istio ingress will be internal or internet-facing."
+  type        = string
+  default     = "internet-facing"
 }
 
 variable "certificate_arn" {
