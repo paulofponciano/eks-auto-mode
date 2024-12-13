@@ -13,6 +13,12 @@ resource "helm_release" "istio_base" {
   ]
 }
 
+resource "time_sleep" "wait_60_warmup_first_node" {
+  depends_on = [helm_release.istio_base]
+
+  create_duration = "60s"
+}
+
 resource "helm_release" "istiod" {
   count            = var.istio_ingress_enabled ? 1 : 0
   name             = "istio"
@@ -26,6 +32,7 @@ resource "helm_release" "istiod" {
   depends_on = [
     aws_eks_cluster.eks_auto_mode,
     helm_release.istio_base,
+    time_sleep.wait_60_warmup_first_node
   ]
 }
 
@@ -68,9 +75,16 @@ resource "helm_release" "istio_ingress" {
     value = "tcp"
   }
 
-    set {
+  set {
     name  = "service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-ports"
     value = "https"
   }
+
+  depends_on = [
+    aws_eks_cluster.eks_auto_mode,
+    helm_release.istio_base,
+    helm_release.istiod,
+    time_sleep.wait_60_warmup_first_node
+  ]
 }
 
