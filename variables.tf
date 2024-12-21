@@ -38,6 +38,19 @@ variable "enabled_cluster_log_types" {
   description = "Control Plane Logging."
 }
 
+variable "create_cluster_access_entry" {
+  description = "Create additional access entries."
+  type        = bool
+  default     = false
+}
+
+variable "cluster_role_or_user_arn_access_entry" {
+  type        = list(string)
+  description = "List of User or Role ARNs to add as IAM entries for cluster access (API)."
+  default     = ["arn:aws:iam::ACCOUNT_ID:user/USER1"]
+}
+
+
 variable "istio_ingress_enabled" {
   description = "Defines whether Istio ingress will be enabled."
   type        = bool
@@ -48,6 +61,12 @@ variable "istio_nlb_ingress_scheme" {
   description = "Defines whether the NLB for the Istio ingress will be internal or internet-facing."
   type        = string
   default     = "internet-facing"
+}
+
+variable "istio_version" {
+  type        = string
+  description = "Istio version."
+  default     = "1.23"
 }
 
 variable "certificate_arn" {

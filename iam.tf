@@ -69,3 +69,25 @@ resource "aws_iam_role_policy_attachment" "cluster_AmazonEKSNetworkingPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSNetworkingPolicy"
   role       = aws_iam_role.cluster.name
 }
+
+resource "aws_eks_access_entry" "owner" {
+  count         = var.create_cluster_access_entry ? length(var.cluster_role_or_user_arn_access_entry) : 0
+  cluster_name  = aws_eks_cluster.eks_auto_mode.name
+  principal_arn = var.cluster_role_or_user_arn_access_entry[count.index]
+  type          = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "AmazonEKSClusterAdminPolicy" {
+  count         = var.create_cluster_access_entry ? length(var.cluster_role_or_user_arn_access_entry) : 0
+  cluster_name  = aws_eks_cluster.eks_auto_mode.name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = var.cluster_role_or_user_arn_access_entry[count.index]
+
+  access_scope {
+    type = "cluster"
+  }
+
+  depends_on = [
+    aws_eks_access_entry.owner
+  ]
+}

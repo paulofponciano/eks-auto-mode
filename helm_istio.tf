@@ -6,7 +6,7 @@ resource "helm_release" "istio_base" {
   namespace        = "istio-system"
   create_namespace = true
 
-  version = "1.23.0"
+  version = var.istio_version
 
   depends_on = [
     aws_eks_cluster.eks_auto_mode,
@@ -14,6 +14,7 @@ resource "helm_release" "istio_base" {
 }
 
 resource "time_sleep" "wait_60_warmup_first_node" {
+  count      = var.istio_ingress_enabled ? 1 : 0
   depends_on = [helm_release.istio_base]
 
   create_duration = "60s"
@@ -27,7 +28,7 @@ resource "helm_release" "istiod" {
   namespace        = "istio-system"
   create_namespace = true
 
-  version = "1.23.0"
+  version = var.istio_version
 
   depends_on = [
     aws_eks_cluster.eks_auto_mode,
@@ -43,7 +44,7 @@ resource "helm_release" "istio_ingress" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = true
-  version          = "1.23.0"
+  version          = var.istio_version
 
   set {
     name  = "service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
@@ -87,4 +88,3 @@ resource "helm_release" "istio_ingress" {
     time_sleep.wait_60_warmup_first_node
   ]
 }
-

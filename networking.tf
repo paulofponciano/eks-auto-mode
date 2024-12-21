@@ -27,6 +27,7 @@ resource "aws_subnet" "private_subnet_az1" {
       Name                                        = join("-", [var.cluster_name, "private", var.az1])
       "kubernetes.io/cluster/${var.cluster_name}" = "shared",
       "kubernetes.io/role/internal-elb"           = "1",
+      "karpenter.sh/discovery"                    = "true"
     }
   )
 }
@@ -43,6 +44,7 @@ resource "aws_subnet" "private_subnet_az2" {
       Name                                        = join("-", [var.cluster_name, "private", var.az2]),
       "kubernetes.io/cluster/${var.cluster_name}" = "shared",
       "kubernetes.io/role/internal-elb"           = "1",
+      "karpenter.sh/discovery"                    = "true"
     }
   )
 }
