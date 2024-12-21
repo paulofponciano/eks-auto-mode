@@ -4,7 +4,7 @@
 
 # EKS Auto Mode
 
-- To use spot instances, add to deployment
+- To use spot instances, add to deployment:
 
     ```yaml
     ...
